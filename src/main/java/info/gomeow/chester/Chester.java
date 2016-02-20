@@ -1,8 +1,6 @@
 package info.gomeow.chester;
 
 import info.gomeow.chester.API.AsyncChesterLogEvent;
-import info.gomeow.chester.util.Metrics;
-import info.gomeow.chester.util.Updater;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -14,7 +12,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 
 import me.ryanhamshire.GriefPrevention.DataStore;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
@@ -27,8 +24,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jibble.jmegahal.JMegaHal;
-
-import static org.bukkit.Bukkit.getServer;
 
 public class Chester extends JavaPlugin implements Listener {
     GriefPrevention gp = (GriefPrevention)getServer().getPluginManager().getPlugin("GriefPrevention");
@@ -62,8 +57,6 @@ public class Chester extends JavaPlugin implements Listener {
         }
         getLogger().info("Triggerwords: " + triggerwords);
         startChester();
-        startMetrics();
-        checkUpdate();
     }
 
     @Override
@@ -88,36 +81,6 @@ public class Chester extends JavaPlugin implements Listener {
             in.close();
         }
         return hal;
-    }
-
-    public void checkUpdate() {
-        new BukkitRunnable() {
-
-            public void run() {
-                if(getConfig().getBoolean("check-update", true)) {
-                    try {
-                        Updater u = new Updater(getDescription().getVersion());
-                        if(UPDATE = u.getUpdate()) {
-                            LINK = u.getLink();
-                            NEWVERSION = u.getNewVersion();
-                        }
-                    } catch(Exception e) {
-                        getLogger().log(Level.WARNING, "Failed to check for updates.");
-                        getLogger().log(Level.WARNING, "Report this stack trace to gomeow.");
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }.runTaskAsynchronously(this);
-    }
-
-    public void startMetrics() {
-        try {
-            Metrics metrics = new Metrics(this);
-            metrics.start();
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void startChester() {
