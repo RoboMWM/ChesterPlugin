@@ -18,7 +18,7 @@ public class ChesterBroadcastEvent extends Event {
 
     public ChesterBroadcastEvent(String message) {
         this.message = message;
-        recipients = new HashSet<Player>((Collection<? extends Player>) Arrays.asList(Bukkit.getOnlinePlayers()));
+        recipients = new HashSet<Player>(Bukkit.getOnlinePlayers());
     }
 
     /**
