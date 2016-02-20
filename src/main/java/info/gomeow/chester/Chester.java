@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
+import me.ryanhamshire.GriefPrevention.DataStore;
+import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -26,7 +28,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jibble.jmegahal.JMegaHal;
 
+import static org.bukkit.Bukkit.getServer;
+
 public class Chester extends JavaPlugin implements Listener {
+    GriefPrevention gp = (GriefPrevention)getServer().getPluginManager().getPlugin("GriefPrevention");
+    DataStore ds = gp.dataStore;
 
     public static String LINK;
     public static boolean UPDATE;
@@ -74,7 +80,6 @@ public class Chester extends JavaPlugin implements Listener {
         }
         hal.add("Hello World");
         hal.add("Can I have some coffee?");
-        hal.add("Please slap me");
     }
 
     public JMegaHal transfer(ObjectInputStream in) throws ClassNotFoundException, IOException {
@@ -186,13 +191,19 @@ public class Chester extends JavaPlugin implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onChat(final AsyncPlayerChatEvent event) {
         final Player player = event.getPlayer();
+        //If alone or softmuted, don't log
+        boolean isPlayerChattingToSelf = false;
+        if (event.getRecipients().size() < 2 || ds.isSoftMuted(player.getUniqueId()))
+            isPlayerChattingToSelf = true;
+        final boolean doNotLog = isPlayerChattingToSelf;
+
         final AsyncChesterLogEvent cle = new AsyncChesterLogEvent(player, event.getMessage());
         getServer().getPluginManager().callEvent(cle);
         final String message = cle.getMessage();
         // Permissions checks aren't thread safe so we need to handle this on the main thread
         new BukkitRunnable() {
             public void run() {
-                if(player.hasPermission("chester.log") && !cle.isCancelled()) {
+                if(player.hasPermission("chester.log") && !cle.isCancelled() && !doNotLog) {
                     addToFile(clean(message));
                 }
                 if (player.hasPermission("chester.trigger")) {
@@ -203,7 +214,7 @@ public class Chester extends JavaPlugin implements Listener {
                             break;
                         }
                     }
-                    if(!cancel) {
+                    if(!cancel && !doNotLog) {
                         Chester.this.chester.addSentenceToBrain(message);
                     }
                 }
