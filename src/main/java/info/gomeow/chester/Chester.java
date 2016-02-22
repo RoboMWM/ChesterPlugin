@@ -26,8 +26,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jibble.jmegahal.JMegaHal;
 
 public class Chester extends JavaPlugin implements Listener {
-    GriefPrevention gp = (GriefPrevention)getServer().getPluginManager().getPlugin("GriefPrevention");
-    DataStore ds = gp.dataStore;
+    DataStore ds;
 
     public static String LINK;
     public static boolean UPDATE;
@@ -57,6 +56,8 @@ public class Chester extends JavaPlugin implements Listener {
         }
         getLogger().info("Triggerwords: " + triggerwords);
         startChester();
+        GriefPrevention gp = (GriefPrevention)getServer().getPluginManager().getPlugin("GriefPrevention");
+        ds = gp.dataStore;
     }
 
     @Override
