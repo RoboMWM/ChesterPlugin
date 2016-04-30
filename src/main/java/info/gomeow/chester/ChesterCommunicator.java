@@ -5,7 +5,10 @@ import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jibble.jmegahal.JMegaHal;
@@ -49,8 +52,9 @@ public class ChesterCommunicator implements Runnable {
                                     plyer.sendMessage(name + color + msg);
                                 }
                                 System.out.println(ChatColor.stripColor(msg));
+                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "irc say samplebot #MLG " + name + msg);
                             }
-                        }.runTaskLater(plugin, 1L);
+                        }.runTaskLater(plugin, 5L);
                         break;
                     }
                 }
