@@ -1,5 +1,6 @@
 package info.gomeow.chester;
 
+import com.cnaude.purpleirc.Events.IRCMessageEvent;
 import info.gomeow.chester.API.AsyncChesterLogEvent;
 
 import java.io.BufferedReader;
@@ -18,6 +19,7 @@ import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -27,10 +29,6 @@ import org.jibble.jmegahal.JMegaHal;
 
 public class Chester extends JavaPlugin implements Listener {
     DataStore ds;
-
-    public static String LINK;
-    public static boolean UPDATE;
-    public static String NEWVERSION;
 
     List<String> triggerwords;
 
@@ -143,21 +141,12 @@ public class Chester extends JavaPlugin implements Listener {
         this.newSentences.add(sentence);
     }
 
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-        if(player.isOp() && UPDATE) {
-            player.sendMessage(ChatColor.DARK_AQUA + "Version " + NEWVERSION + " of Chester is up for download!");
-            player.sendMessage(ChatColor.DARK_AQUA + LINK + " to view the changelog and download!");
-        }
-    }
-
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onChat(final AsyncPlayerChatEvent event) {
         final Player player = event.getPlayer();
         //If alone or softmuted, don't log
         boolean isPlayerChattingToSelf = false;
-        if (event.getRecipients().size() < 2 || ds.isSoftMuted(player.getUniqueId()))
+        if (event.getRecipients().size() < getServer().getOnlinePlayers().size() || ds.isSoftMuted(player.getUniqueId()))
             isPlayerChattingToSelf = true;
         final boolean doNotLog = isPlayerChattingToSelf;
 
@@ -184,6 +173,19 @@ public class Chester extends JavaPlugin implements Listener {
                 }
             }
         }.runTask(this);
+        this.chester.queueMessage(message);
+    }
+
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
+    void onIRCChat(IRCMessageEvent event)
+    {
+        //Remove excess whitespace
+        String message = event.getMessage().replaceAll("\\s+", " ").trim();
+
+        //I removed dis cuz I don't think I've got any plugin listening to dis event
+//        final AsyncChesterLogEvent cle = new AsyncChesterLogEvent(null, event.getMessage());
+//        getServer().getPluginManager().callEvent(cle);
+//        final String message = cle.getMessage();
         this.chester.queueMessage(message);
     }
 }

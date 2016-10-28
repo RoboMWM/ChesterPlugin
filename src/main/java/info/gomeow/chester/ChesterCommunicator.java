@@ -66,7 +66,11 @@ public class ChesterCommunicator implements Runnable {
     }
 
     private synchronized String getSentence(String trigger, String message) {
-        String sentence = brain.getSentence();
+        String sentence;
+        if (message.contains(" "))
+            sentence = brain.getSentence(message.replaceAll("(?i)" + trigger, "").split(" ")[RAND.nextInt(message.split(" ").length)]);
+        else
+            sentence = brain.getSentence();
         while (sentence.matches("^.*(?i)" + trigger + ".*$")) {
             sentence = brain.getSentence(message.replaceAll("(?i)" + trigger, "").split(" ")[RAND.nextInt(message.split(" ").length)]);
         }
