@@ -55,7 +55,7 @@ public class ChesterCommunicator implements Runnable {
                                 System.out.println(ChatColor.stripColor(msg));
                                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "irc say samplebot #MLG " + name + msg);
                             }
-                        }.runTaskLater(plugin, ThreadLocalRandom.current().nextLong(20L, 100L));
+                        }.runTaskLater(plugin, ThreadLocalRandom.current().nextLong(20L, 80L));
                         break;
                     }
                 }
