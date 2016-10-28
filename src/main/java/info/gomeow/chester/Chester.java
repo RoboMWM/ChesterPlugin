@@ -28,7 +28,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jibble.jmegahal.JMegaHal;
 
 public class Chester extends JavaPlugin implements Listener {
-    DataStore ds;
 
     List<String> triggerwords;
 
@@ -54,8 +53,6 @@ public class Chester extends JavaPlugin implements Listener {
         }
         getLogger().info("Triggerwords: " + triggerwords);
         startChester();
-        GriefPrevention gp = (GriefPrevention)getServer().getPluginManager().getPlugin("GriefPrevention");
-        ds = gp.dataStore;
     }
 
     @Override
@@ -144,9 +141,9 @@ public class Chester extends JavaPlugin implements Listener {
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onChat(final AsyncPlayerChatEvent event) {
         final Player player = event.getPlayer();
-        //If alone or softmuted, don't log
+        //If alone, don't log
         boolean isPlayerChattingToSelf = false;
-        if (event.getRecipients().size() < getServer().getOnlinePlayers().size() || ds.isSoftMuted(player.getUniqueId()))
+        if (event.getRecipients().size() <= 1)
             isPlayerChattingToSelf = true;
         final boolean doNotLog = isPlayerChattingToSelf;
 
