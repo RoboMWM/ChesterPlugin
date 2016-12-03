@@ -197,9 +197,9 @@ public class Chester extends JavaPlugin implements Listener {
                 if (!player.isOnline())
                     return;
                 if (player.hasPlayedBefore())
-                    chester.queueMessage(player.getName() + " hello");
+                    chester.queueMessage(player.getName() + "U_W0T_B0T hello hi hoi hai m8");
                 else if (!player.hasPlayedBefore())
-                    chester.queueMessage(player.getName() + " welcome");
+                    chester.queueMessage("U_W0T_B0T welcome welcome welcome welcome welcome welcome");
             }
         }.runTaskLater(this, 200L);
     }
