@@ -186,21 +186,21 @@ public class Chester extends JavaPlugin implements Listener {
         this.chester.queueMessage(message);
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
-    void onPlayerJoin(final PlayerJoinEvent event)
-    {
-        new BukkitRunnable()
-        {
-            Player player = event.getPlayer();
-            public void run()
-            {
-                if (!player.isOnline())
-                    return;
-                if (player.hasPlayedBefore())
-                    chester.queueMessage(player.getName() + "U_W0T_B0T hello hi hoi hai m8");
-                else if (!player.hasPlayedBefore())
-                    chester.queueMessage("U_W0T_B0T welcome welcome welcome welcome welcome welcome");
-            }
-        }.runTaskLater(this, 200L);
-    }
+//    @EventHandler(priority = EventPriority.HIGHEST)
+//    void onPlayerJoin(final PlayerJoinEvent event)
+//    {
+//        new BukkitRunnable()
+//        {
+//            Player player = event.getPlayer();
+//            public void run()
+//            {
+//                if (!player.isOnline())
+//                    return;
+//                if (player.hasPlayedBefore())
+//                    chester.queueMessage(player.getName() + "U_W0T_B0T hello hi hoi hai m8");
+//                else if (!player.hasPlayedBefore())
+//                    chester.queueMessage("U_W0T_B0T welcome welcome welcome welcome welcome welcome");
+//            }
+//        }.runTaskLater(this, 200L);
+//    }
 }
