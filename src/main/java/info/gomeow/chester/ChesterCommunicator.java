@@ -55,7 +55,7 @@ public class ChesterCommunicator implements Runnable {
                                 System.out.println(ChatColor.stripColor(msg));
                                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "irc say samplebot #MLG " + name + msg);
                             }
-                        }.runTaskLater(plugin, ThreadLocalRandom.current().nextLong(20L, 80L));
+                        }.runTaskLater(plugin, ThreadLocalRandom.current().nextLong(30L, 80L)); //Delay output from 1.5-4 seconds for "natural" response time
                         break;
                     }
                 }
@@ -66,18 +66,24 @@ public class ChesterCommunicator implements Runnable {
     }
 
     private synchronized String getSentence(String trigger, String message) {
+        message = message.replaceAll("(?i)" + trigger, "");
         String[] messageArray = message.split(" ");
         String sentence;
 
         if (messageArray.length > 1) //RoboMWM - use a word in the message to get from Chester
             sentence = brain.getSentence(messageArray[RAND.nextInt(messageArray.length)]);
         else
-            sentence = brain.getSentence(message);
-        while (sentence.matches("^.*(?i)" + trigger + ".*$")) { //replace all triggerwords in sentence with another sentence
-            sentence = message.replaceAll("(?i)" + trigger, "");
-            messageArray = sentence.split(" ");
-            sentence += brain.getSentence(messageArray[RAND.nextInt(messageArray.length)]);
-            //sentence = brain.getSentence(message.replaceAll("(?i)" + trigger, "").split(" ")[RAND.nextInt(message.split(" ").length)]);
+            sentence = brain.getSentence();
+        for (String triggers : triggers) //RoboMWM - check for all triggers
+        {
+            //If sentence contains a trigger word, remove it and append another sentence
+            while (sentence.matches("^.*(?i)" + trigger + ".*$"))
+            {
+                sentence = sentence.replaceAll("(?i)" + trigger, "");
+                String[] sentenceArray = sentence.split(" ");
+                sentence += brain.getSentence(sentenceArray[RAND.nextInt(sentenceArray.length)]);
+                //sentence = brain.getSentence(message.replaceAll("(?i)" + trigger, "").split(" ")[RAND.nextInt(message.split(" ").length)]);
+            }
         }
         return sentence;
     }
