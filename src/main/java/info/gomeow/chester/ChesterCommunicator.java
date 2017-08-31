@@ -53,7 +53,7 @@ public class ChesterCommunicator implements Runnable {
                                     plyer.sendMessage(name + color + msg);
                                 }
                                 System.out.println(ChatColor.stripColor(msg));
-                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "irc say samplebot #MLG " + name + msg);
+                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "communicationconnector " + name + msg);
                             }
                         }.runTaskLater(plugin, ThreadLocalRandom.current().nextLong(30L, 80L)); //Delay output from 1.5-4 seconds for "natural" response time
                         break;
