@@ -1,7 +1,7 @@
 main: info.gomeow.chester.Chester
 name: Chester
 version: ${project.version}
-depend: [ GriefPrevention ]
+depend: [ CommunicationConnector ]
 
 permissions:
   chester.*:

@@ -1,7 +1,15 @@
 package info.gomeow.chester;
 
-import com.cnaude.purpleirc.Events.IRCMessageEvent;
 import info.gomeow.chester.API.AsyncChesterLogEvent;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.jibble.jmegahal.JMegaHal;
+import to.us.mlgfort.communicationconnector.IncomingChatEvent;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -13,19 +21,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
-
-import me.ryanhamshire.GriefPrevention.DataStore;
-import me.ryanhamshire.GriefPrevention.GriefPrevention;
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.jibble.jmegahal.JMegaHal;
 
 public class Chester extends JavaPlugin implements Listener {
 
@@ -174,7 +169,7 @@ public class Chester extends JavaPlugin implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
-    void onIRCChat(IRCMessageEvent event)
+    void onIRCChat(IncomingChatEvent event)
     {
         //Remove excess whitespace
         String message = event.getMessage().replaceAll("\\s+", " ").trim();
