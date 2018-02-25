@@ -143,7 +143,19 @@ public class Chester extends JavaPlugin implements Listener {
         final boolean doNotLog = isPlayerChattingToSelf;
 
         final AsyncChesterLogEvent cle = new AsyncChesterLogEvent(player, event.getMessage());
-        getServer().getPluginManager().callEvent(cle);
+        if (getServer().isPrimaryThread()) //player#chat calls in sync for some reason
+        {
+            new BukkitRunnable()
+            {
+                @Override
+                public void run()
+                {
+                    getServer().getPluginManager().callEvent(cle);
+                }
+            }.runTaskAsynchronously(this);
+        }
+        else
+            getServer().getPluginManager().callEvent(cle);
         final String message = cle.getMessage();
         // Permissions checks aren't thread safe so we need to handle this on the main thread
         new BukkitRunnable() {
