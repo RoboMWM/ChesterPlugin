@@ -30,6 +30,13 @@ public class Chester extends JavaPlugin implements Listener {
 
     ChesterCommunicator chester;
 
+    private JMegaHal hal;
+
+    public JMegaHal getHal()
+    {
+        return hal;
+    }
+
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
@@ -100,6 +107,7 @@ public class Chester extends JavaPlugin implements Listener {
                 firstRun(hal, chesterFile);
             }
             this.chester = new ChesterCommunicator(this, hal, triggerwords);
+            this.hal = hal;
         } catch(IOException ioe) {
         } catch(ClassNotFoundException cnfe) {
         }
