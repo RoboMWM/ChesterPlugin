@@ -2,6 +2,7 @@ main: info.gomeow.chester.Chester
 name: Chester
 version: ${project.version}
 depend: [ CommunicationConnector ]
+api-version: 1.13
 
 permissions:
   chester.*:

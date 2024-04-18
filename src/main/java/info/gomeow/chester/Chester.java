@@ -9,7 +9,6 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jibble.jmegahal.JMegaHal;
-import to.us.mlgfort.communicationconnector.IncomingChatEvent;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -71,6 +70,17 @@ public class Chester extends JavaPlugin implements Listener {
         }
         hal.add("Hello World");
         hal.add("Can I have some coffee?");
+        hal.add("Can I have some hot chocolate?");
+        hal.add("Pirate emos be like: \"Yarr XD\"");
+        hal.add("What is this \"unbiblical cord\". And why do we still let infants have them.");
+        hal.add("What do you mean women? I just said I got a smoking hot grill");
+        hal.add("I was told there'd be a rapture. Where my rapture at?");
+        hal.add("Dude I was not shooting the ball in the wrong hoop, I was just playing ad orientem");
+        hal.add("To be flattered endlessly is a curse I wouldn't wish on any man");
+        hal.add("He told me to love my neigh-bor");
+        hal.add("I just deleted a post that was pure cringe. If you saw it you saw it");
+        hal.add("Big banana bat bites the bountiful berry and begins to brightly boast of his banana breaking beauty");
+        hal.add("His HOLINESS Pope Francis \uD83D\uDCAA\uD83D\uDDFF His troliness Papa Frank\uD83D\uDDE3\uD83D\uDD25\uD83D\uDD25\uD83D\uDD25");
     }
 
     public JMegaHal transfer(ObjectInputStream in) throws ClassNotFoundException, IOException {
@@ -185,19 +195,6 @@ public class Chester extends JavaPlugin implements Listener {
                 }
             }
         }.runTask(this);
-        this.chester.queueMessage(message);
-    }
-
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
-    void onIRCChat(IncomingChatEvent event)
-    {
-        //Remove excess whitespace
-        String message = event.getMessage().replaceAll("\\s+", " ").trim();
-
-        //I removed dis cuz I don't think I've got any plugin listening to dis event
-//        final AsyncChesterLogEvent cle = new AsyncChesterLogEvent(null, event.getMessage());
-//        getServer().getPluginManager().callEvent(cle);
-//        final String message = cle.getMessage();
         this.chester.queueMessage(message);
     }
 

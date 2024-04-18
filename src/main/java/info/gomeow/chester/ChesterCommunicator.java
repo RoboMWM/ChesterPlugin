@@ -16,7 +16,6 @@ import org.jibble.jmegahal.JMegaHal;
 
 import info.gomeow.chester.API.ChesterBroadcastEvent;
 import info.gomeow.chester.API.AsyncChesterLogEvent;
-import to.us.mlgfort.communicationconnector.CommunicationConnector;
 
 public class ChesterCommunicator implements Runnable {
     private static final Random RAND = new Random();
@@ -25,7 +24,6 @@ public class ChesterCommunicator implements Runnable {
     private final List<String> triggers;
     private final Chester plugin;
     private final Thread thread;
-    private final CommunicationConnector communicationConnector;
 
     public ChesterCommunicator(Chester plugin, JMegaHal brain, List<String> triggers) {
         this.plugin = plugin;
@@ -33,7 +31,6 @@ public class ChesterCommunicator implements Runnable {
         this.triggers = triggers;
         this.thread = new Thread(null, this, "Chester");
         this.thread.start();
-        communicationConnector = (CommunicationConnector)plugin.getServer().getPluginManager().getPlugin("CommunicationConnector");
     }
 
     @Override
@@ -56,7 +53,6 @@ public class ChesterCommunicator implements Runnable {
                                     plyer.sendMessage(name + color + msg);
                                 }
                                 System.out.println(ChatColor.stripColor(msg));
-                                communicationConnector.sendToAllApps(name.substring(0, name.length() - 2), msg);
                             }
                         }.runTaskLater(plugin, ThreadLocalRandom.current().nextLong(30L, 80L)); //Delay output from 1.5-4 seconds for "natural" response time
                         break;

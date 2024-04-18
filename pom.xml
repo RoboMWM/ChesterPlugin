@@ -3,7 +3,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>info.gomeow</groupId>
 	<artifactId>chester</artifactId>
-	<version>2.7.1</version>
+	<version>3.0.0</version>
 	<name>Chester</name>
 	<build>
 		<defaultGoal>clean package install</defaultGoal>
@@ -19,51 +19,20 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 				</includes>
 			</resource>
 		</resources>
-		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.0</version>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
-					<descriptors>
-						<descriptor>src/main/assembly/package.xml</descriptor>
-					</descriptors>
-				</configuration>
-				<executions>
-					<execution>
-						<id>build</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
 	</build>
 	<dependencies>
 		<dependency>
-			<groupId>com.destroystokyo.paper</groupId>
-			<artifactId>paper-api</artifactId>
-			<version>1.12.2-R0.1-SNAPSHOT</version>
+			<groupId>org.purpurmc.purpur</groupId>
+			<artifactId>purpur-api</artifactId>
+			<version>1.20.4-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.github.MLG-Fortress</groupId>
-			<artifactId>CommunicationConnector</artifactId>
-			<version>1.2</version>
 		</dependency>
 	</dependencies>
 	<repositories>
 		<repository>
-			<id>paper-repo</id>
-			<url>https://repo.destroystokyo.com/repository/maven-public/</url>
+			<id>purpur</id>
+			<name>Purpur Maven Repo</name>
+			<url>https://repo.purpurmc.org/snapshots</url>
 		</repository>
 		<repository>
 			<id>jitpack.io</id>
